@@ -1,0 +1,36 @@
+<script>
+    function uploadFile() {
+        const form = document.getElementById('upload-form');
+        const formData = new FormData(form);
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '';  // Clear previous messages
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error:</strong> ${data.error}
+                    </div>`;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-success" role="alert">
+                        <strong>Success:</strong> ${data.message}
+                    </div>
+                    <p>File path: <a href="${data.file_path}" target="_blank">${data.file_path}</a></p>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    <strong>Error:</strong> An unexpected error occurred.
+                </div>`;
+        });
+    }
+</script>

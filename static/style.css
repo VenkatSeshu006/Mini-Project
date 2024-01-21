@@ -1,0 +1,12 @@
+body {
+    background-color: #040404;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+#result {
+    margin-top: 20px;
+}
